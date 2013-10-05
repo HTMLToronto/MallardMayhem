@@ -1,0 +1,135 @@
+/* Page Design */
+
+body {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    background-color: #68b6fa;
+    overflow: hidden;
+}
+
+#plantlife {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    background-image: url(plantlife.gif);
+    background-position: center bottom;
+    background-size: cover;
+    background-repeat: repeat-x;
+    pointer-events:none;
+}
+
+button {
+    position: absolute;
+    z-index: 999;
+    bottom: 30px;
+    left: 30px;
+    padding:3px;
+    font-size:17px;
+}
+
+/* Ducks */
+
+span[class^="duck-"] {
+
+    display: block;
+    float: left;
+    width: 38px;
+    height: 36px;
+    -webkit-transform-origin: 50% 50%;
+
+    background-image: url(duckhunt_various_sheet.png);
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+@-webkit-keyframes blackRight {
+    0% { background-position: -130px -113px; }
+    24.999% { background-position: -130px -113px; }
+    25% { background-position: -170px -113px; }
+    49.999% { background-position: -170px -113px; }
+    50% { background-position: -211px -113px; }
+    74.999% { background-position: -211px -113px; }
+    75% { background-position: -170px -113px; }
+    100% { background-position: -170px -113px; }
+}
+
+@-webkit-keyframes blackTopRight {
+    0% { background-position: -130px -154px; }
+    24.999% { background-position: -130px -154px; }
+    25% { background-position: -170px -154px; }
+    49.999% { background-position: -170px -154px; }
+    50% { background-position: -211px -154px; }
+    74.999% { background-position: -211px -154px; }
+    75% { background-position: -170px -154px; }
+    100% { background-position: -170px -154px; }
+}
+
+@-webkit-keyframes blackUp {
+    0% { background-position: -130px -196px; }
+    24.999% { background-position: -130px -196px; }
+    25% { background-position: -170px -196px; }
+    49.999% { background-position: -170px -196px; }
+    50% { background-position: -211px -196px; }
+    74.999% { background-position: -211px -196px; }
+    75% { background-position: -170px -196px; }
+    100% { background-position: -170px -196px; }
+}
+
+@-webkit-keyframes blackDead {
+    0% { background-position: -130px -237px; }
+    74.999% { background-position: -130px -237px; }
+    75% { background-position: -170px -237px; }
+    100% { background-position: -170px -237px; }
+}
+
+span.duck-black-right {
+    -webkit-animation: blackRight 1s linear infinite;
+}
+
+span.duck-black-left {
+    -webkit-transform: rotateY(180deg);
+    -webkit-animation: blackRight 1s linear infinite;
+}
+
+span.duck-black-top-right {
+    -webkit-animation: blackTopRight 1s linear infinite;
+}
+
+span.duck-black-top-left {
+    -webkit-transform: rotateY(180deg);
+    -webkit-animation: blackTopRight 1s infinite;
+}
+
+span.duck-black-bottom-left {
+    -webkit-transform: rotateY(180deg) rotateZ(90deg);
+    -webkit-animation: blackTopRight 1s infinite;
+}
+
+span.duck-black-bottom-right {
+    -webkit-transform: rotateZ(90deg);
+    -webkit-animation: blackTopRight 1s  infinite;
+}
+
+span.duck-black-top {
+    -webkit-animation: blackUp 1s linear infinite;
+}
+
+span.duck-black-bottom {
+    -webkit-transform: rotateZ(180deg);
+    -webkit-animation: blackUp 1s linear infinite;
+}
+
+span.duck-black-dead {
+    -webkit-animation: blackDead 1s linear;
+    background-position: -170px -237px;
+}
