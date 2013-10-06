@@ -146,13 +146,14 @@ var MallardMayhem = MallardMayhem || {};
             self.domElement.setAttribute('class', 'duck-' + self.colour + '-right');
             self.domElement.addEventListener('click', self.gotShot);
             MallardMayhem.stage.appendChild(self.domElement);
-            var randomLocation = MallardMayhem.randomCoord();
+            var randomLocation = MallardMayhem.randomCoord(),
+            	format = (navigator.userAgent.indexOf('Firefox') > 1) ? 'ogg' : 'mp3';;
             self.flyTo(randomLocation);
             self.lifeSpan = setTimeout(self.flyAway, self.maxAge);
-
+			
             self.sounds = {
-                fall : new Audio('./interface/fall.mp3'),
-                ground: new Audio('./interface/ground.mp3')
+                fall : new Audio('./interface/fall.' + format),
+                ground: new Audio('./interface/ground.' + format)
             };
             self.sounds.fall.volume = 0.1;
 

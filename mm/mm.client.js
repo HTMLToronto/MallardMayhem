@@ -164,14 +164,17 @@ var MallardMayhem = MallardMayhem || {};
         };
 
         this.initialize = function () {
+        	
+        	var format = (navigator.userAgent.indexOf('Firefox') > 1) ? 'ogg' : 'mp3';
+        
             this.loadModules([{
                 file: './mm/mm.client.duck.js'
             }]);
 
             self.sounds = {
-                shot : new Audio('./interface/shot.mp3'),
-                intro : new Audio('./interface/intro.mp3'),
-                endRound : new Audio('./interface/endRound.mp3')
+                shot : new Audio('./interface/shot.' + format),
+                intro : new Audio('./interface/intro.' + format),
+                endRound : new Audio('./interface/endRound.' + format)
             };
             self.sounds.intro.addEventListener('ended', self.beginRound);
             self.sounds.endRound.addEventListener('ended', function () {
