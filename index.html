@@ -1,10 +1,44 @@
+<!DOCTYPE HTML>
 <html>
     <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    	<title>Mallard Mayhem - HTML Toronto</title>
         <link type="text/css" href="./interface/interface.css" rel="Stylesheet" />
     </head>
     <body>
         <div id="plantlife"></div>
-        <button>Quack!</button>
+        <aside>
+            <h1>Mallard Mayhem</h1>
+            <div id="scoreboard">
+                <div>Total Ducks: <span id="totalDucks">0</span></div>
+                <div>Total Hit: <span id="totalHits">0</span></div>
+                <div>Shots Fired: <span id="totalShots">0</span></div>
+            </div>
+            <div id="gameControls">
+                <select id="gameType" name="gameType">
+                    <optgroup>
+                        <option value="easy">Easy (10)</option>
+                        <option value="medium">Medium (30)</option>
+                        <option value="hardcore">Hardcore (99)</option>
+                    </optgroup>
+                    <option value="parent">Parent</option>
+                </select>
+                <button id="beginRound">Begin!</button>
+            </div>
+        </aside>
         <script type="text/javascript" src="./mm/mm.client.js"></script>
+        <script>
+//	        var _gaq = _gaq || [];
+//			_gaq.push(['_setAccount', 'UA-35012293-1']);
+//			_gaq.push(['_setDomainName', 'htmltoronto.ca']);
+//			_gaq.push(['_setAllowLinker', true]);
+//			_gaq.push(['_trackPageview']);
+//
+//			(function() {
+//			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+//			})();
+        </script>
     </body>
 </html>

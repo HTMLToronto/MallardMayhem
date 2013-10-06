@@ -1,4 +1,4 @@
-/*globals document, console, setTimeout, clearTimeout */
+/*globals document, console, setTimeout, clearTimeout, Audio */
 var MallardMayhem = MallardMayhem || {};
 
 (function () {
@@ -13,6 +13,7 @@ var MallardMayhem = MallardMayhem || {};
 
         this.domElement = document.createElement('span');
         this.currentLocation = 0;
+        this.sounds = {};
 
         this.maxAge = (20 * 1000);
         this.lifeSpan = null;
@@ -114,9 +115,11 @@ var MallardMayhem = MallardMayhem || {};
         this.drop = function () {
             self.currentLocation[1] = self.currentLocation[1] + (MallardMayhem.animationStep * 2);
             self.domElement.style.top = self.currentLocation[1] + 'px';
-            if (self.currentLocation[1] < MallardMayhem.stage.offsetHeight + self.domElement.style.height) {
+            if (self.currentLocation[1] < MallardMayhem.stage.offsetHeight - 72) {
                 setTimeout(self.drop, MallardMayhem.animationSpeed);
             } else {
+                self.sounds.fall.currentLocation = self.sounds.fall.pause();
+                self.sounds.ground.play();
                 MallardMayhem.removeDuck(self.id);
             }
         };
@@ -125,19 +128,34 @@ var MallardMayhem = MallardMayhem || {};
             clearTimeout(self.currentTimeout);
             clearTimeout(self.lifeSpan);
             self.domElement.className = 'duck-' + self.colour + '-dead';
+            self.sounds.fall.play();
             setTimeout(self.drop, ((1000 / 4) * 3));
+        };
+
+        this.gotShot = function () {
+            self.domElement.removeEventListener('click', self.gotShot);
+            MallardMayhem.killDuck(self.id);
+        };
+
+        this.flapWing = function () {
+            self.sounds.flap.play();
         };
 
         this.initialize = function () {
             self.domElement.id = self.id;
             self.domElement.setAttribute('class', 'duck-' + self.colour + '-right');
-            self.domElement.onclick = function () {
-                MallardMayhem.killDuck(self.id);
-            };
+            self.domElement.addEventListener('click', self.gotShot);
             MallardMayhem.stage.appendChild(self.domElement);
             var randomLocation = MallardMayhem.randomCoord();
             self.flyTo(randomLocation);
             self.lifeSpan = setTimeout(self.flyAway, self.maxAge);
+
+            self.sounds = {
+                fall : new Audio('./interface/fall.mp3'),
+                ground: new Audio('./interface/ground.mp3')
+            };
+            self.sounds.fall.volume = 0.1;
+
         };
 
         this.flyAway = function () {

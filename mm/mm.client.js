@@ -1,4 +1,4 @@
-/*globals io, document, console */
+/*globals io, document, console, Audio, setTimeout */
 var MallardMayhem = MallardMayhem || {};
 
 (function () {
@@ -12,9 +12,25 @@ var MallardMayhem = MallardMayhem || {};
         this.ducks = [];
         this.server = null;
         this.stage = document.getElementsByTagName('body')[0];
+        this.startBtn = document.getElementById('beginRound');
         this.duckLimit = 99;
         this.animationStep = 3;
         this.animationSpeed = (1000 / 30);
+        this.sounds = {};
+
+        this.score = {
+            ducks   : 0,
+            hits    : 0,
+            shots   : 0
+        };
+
+        this.scoreBoard = {
+            container : document.getElementById('scoreboard'),
+            actionBtns: document.getElementById('gameControls'),
+            ducks   : document.getElementById('totalDucks'),
+            hits    : document.getElementById('totalHits'),
+            shots    : document.getElementById('totalShots')
+        };
 
         this.serverDisconnected = function () {
             var d;
@@ -89,6 +105,9 @@ var MallardMayhem = MallardMayhem || {};
                     duck : new MallardMayhem.Duck(duckOptions)
                 });
 
+                self.score.ducks = self.score.ducks + 1;
+                self.updateScoreboard();
+
             }
         };
 
@@ -97,6 +116,8 @@ var MallardMayhem = MallardMayhem || {};
             for (d = 0; d < self.ducks.length; d = d + 1) {
                 if (self.ducks[d].id === duckID) {
                     self.ducks[d].duck.kill();
+                    self.score.hits = self.score.hits + 1;
+                    self.updateScoreboard();
                 }
             }
         };
@@ -107,8 +128,17 @@ var MallardMayhem = MallardMayhem || {};
                 if (self.ducks[d].id === duckID) {
                     removeDuck = self.ducks.splice(d, 1);
                     MallardMayhem.stage.removeChild(removeDuck[0].duck.domElement);
+                    if (self.ducks.length === 0) {
+                        self.endRound();
+                    }
                 }
             }
+        };
+
+        this.updateScoreboard = function () {
+            self.scoreBoard.hits.innerHTML = self.score.hits;
+            self.scoreBoard.ducks.innerHTML = self.score.ducks;
+            self.scoreBoard.shots.innerHTML = self.score.shots;
         };
 
         this.loadModules = function (fileArray) {
@@ -126,13 +156,61 @@ var MallardMayhem = MallardMayhem || {};
 
         };
 
+        this.playShot = function () {
+            self.score.shots = self.score.shots + 1;
+            self.updateScoreboard();
+            self.sounds.shot.currentTime = 0;
+            self.sounds.shot.play();
+        };
+
         this.initialize = function () {
             this.loadModules([{
                 file: './mm/mm.client.duck.js'
             }]);
 
-            document.getElementsByTagName('button')[0].onclick = self.createDuck;
+            self.sounds = {
+                shot : new Audio('./interface/shot.mp3'),
+                intro : new Audio('./interface/intro.mp3'),
+                endRound : new Audio('./interface/endRound.mp3')
+            };
+            self.sounds.intro.addEventListener('ended', self.beginRound);
+            self.sounds.endRound.addEventListener('ended', function () {
+                self.scoreBoard.actionBtns.style.display = 'block';
+            });
+            self.startBtn.onclick = function () {
+                self.scoreBoard.actionBtns.style.display = 'none';
+                self.sounds.intro.play();
+            };
 
+        };
+
+        this.beginRound = function () {
+            var gameType = document.getElementById('gameType').value,
+                duckCount,
+                d = 0;
+            self.stage.addEventListener('click', self.playShot);
+            switch (gameType) {
+            case 'hardcore':
+                duckCount = 99;
+                break;
+            case 'medium':
+                duckCount = 30;
+                break;
+            case 'parent':
+                duckCount = 1;
+                break;
+            default:
+                duckCount = 10;
+            }
+            while (d < duckCount) {
+                self.createDuck();
+                d = d + 1;
+            }
+        };
+
+        this.endRound = function () {
+            self.stage.removeEventListener('click', self.playShot);
+            self.sounds.endRound.play();
         };
 
         this.initialize();
