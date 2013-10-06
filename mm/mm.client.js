@@ -278,10 +278,8 @@ var MallardMayhem = MallardMayhem || {};
 
             // Create the custom cursor tracker
             self.stage.addEventListener('mousemove', function (evt) {
-
                 // Use a translate method of adjusting the position to be smoother and use hardware
-                self.cursor.style['-webkit-transform'] = 'translate(' + (evt.pageX - 24) + 'px, ' + (evt.pageY - 24) + 'px)';
-                self.cursor.style['-moz-transform'] = 'translate(' + (evt.pageX - 24) + 'px, ' + (evt.pageY - 24) + 'px)';
+                self.cursor.setAttribute('style', '-webkit-transform: translate(' + (evt.pageX - 24) + 'px, ' + (evt.pageY - 24) + 'px); -moz-transform: translate(' + (evt.pageX - 24) + 'px, ' + (evt.pageY - 24) + 'px)');
 
             });
 
@@ -321,7 +319,7 @@ var MallardMayhem = MallardMayhem || {};
             self.stage.className = 'noCursor';
 
             // Show the custom cursor
-            self.cursor.style.display = 'block';
+            self.cursor.className = 'active';
 
             // Set the round's duck count appropriate to the game type
             switch (gameType) {
@@ -352,7 +350,7 @@ var MallardMayhem = MallardMayhem || {};
             self.stage.className = '';
 
             // Hide the cursor object
-            self.cursor.style.display = 'none';
+            self.cursor.className = '';
 
             // Remove the shot event listeners
             self.stage.removeEventListener('mousedown', self.playShot);

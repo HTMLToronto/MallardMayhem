@@ -92,6 +92,9 @@ h1,
     z-index: 999;
     pointer-events:none;
 }
+#cursor.active {
+	display: block;
+}
 
 button,
 select {
@@ -116,8 +119,8 @@ span[class^="duck-"] {
     height: 36px;
     -webkit-transform-origin: 50% 50%;
     -moz-transform-origin: 50% 50%;
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
     background-image: url(duckhunt_various_sheet.png);
     background-position: 0px 0px;
     background-repeat: no-repeat;
@@ -138,8 +141,28 @@ span[class^="duck-"] {
     75% { background-position: -170px -113px; }
     100% { background-position: -170px -113px; }
 }
+@-moz-keyframes blackRight {
+    0% { background-position: -130px -113px; }
+    24.999% { background-position: -130px -113px; }
+    25% { background-position: -170px -113px; }
+    49.999% { background-position: -170px -113px; }
+    50% { background-position: -211px -113px; }
+    74.999% { background-position: -211px -113px; }
+    75% { background-position: -170px -113px; }
+    100% { background-position: -170px -113px; }
+}
 
 @-webkit-keyframes blackTopRight {
+    0% { background-position: -130px -154px; }
+    24.999% { background-position: -130px -154px; }
+    25% { background-position: -170px -154px; }
+    49.999% { background-position: -170px -154px; }
+    50% { background-position: -211px -154px; }
+    74.999% { background-position: -211px -154px; }
+    75% { background-position: -170px -154px; }
+    100% { background-position: -170px -154px; }
+}
+@-moz-keyframes blackTopRight {
     0% { background-position: -130px -154px; }
     24.999% { background-position: -130px -154px; }
     25% { background-position: -170px -154px; }
@@ -160,8 +183,24 @@ span[class^="duck-"] {
     75% { background-position: -170px -196px; }
     100% { background-position: -170px -196px; }
 }
+@-moz-keyframes blackUp {
+    0% { background-position: -130px -196px; }
+    24.999% { background-position: -130px -196px; }
+    25% { background-position: -170px -196px; }
+    49.999% { background-position: -170px -196px; }
+    50% { background-position: -211px -196px; }
+    74.999% { background-position: -211px -196px; }
+    75% { background-position: -170px -196px; }
+    100% { background-position: -170px -196px; }
+}
 
 @-webkit-keyframes blackDead {
+    0% { background-position: -130px -237px; }
+    74.999% { background-position: -130px -237px; }
+    75% { background-position: -170px -237px; }
+    100% { background-position: -170px -237px; }
+}
+@-moz-keyframes blackDead {
     0% { background-position: -130px -237px; }
     74.999% { background-position: -130px -237px; }
     75% { background-position: -170px -237px; }
@@ -170,42 +209,56 @@ span[class^="duck-"] {
 
 span.duck-black-right {
     -webkit-animation: blackRight 0.2s linear infinite;
+    -moz-animation: blackRight 0.2s linear infinite;
 }
 
 span.duck-black-left {
     -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
     -webkit-animation: blackRight 0.2s linear infinite;
+    -moz-animation: blackRight 0.2s linear infinite;
 }
 
 span.duck-black-top-right {
     -webkit-animation: blackTopRight 0.2s linear infinite;
+    -moz-animation: blackTopRight 0.2s linear infinite;
 }
 
 span.duck-black-top-left {
     -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
     -webkit-animation: blackTopRight 0.2s infinite;
+    -moz-animation: blackTopRight 0.2s infinite;
 }
 
 span.duck-black-bottom-left {
     -webkit-transform: rotateY(180deg) rotateZ(90deg);
+    -moz-transform: rotateY(180deg) rotateZ(90deg);
     -webkit-animation: blackTopRight 0.2s infinite;
+    -moz-animation: blackTopRight 0.2s infinite;
 }
 
 span.duck-black-bottom-right {
     -webkit-transform: rotateZ(90deg);
+    -moz-transform: rotateZ(90deg);
     -webkit-animation: blackTopRight 0.2s  infinite;
+    -moz-animation: blackTopRight 0.2s  infinite;
 }
 
 span.duck-black-top {
     -webkit-animation: blackUp 0.2s linear infinite;
+    -moz-animation: blackUp 0.2s linear infinite;
 }
 
 span.duck-black-bottom {
     -webkit-transform: rotateZ(180deg);
+    -moz-transform: rotateZ(180deg);
     -webkit-animation: blackUp 0.2s linear infinite;
+    -moz-animation: blackUp 0.2s linear infinite;
 }
 
 span.duck-black-dead {
     -webkit-animation: blackDead 1s linear;
+    -moz-animation: blackDead 1s linear;
     background-position: -170px -237px;
 }
