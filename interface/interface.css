@@ -115,7 +115,9 @@ span[class^="duck-"] {
     width: 38px;
     height: 36px;
     -webkit-transform-origin: 50% 50%;
-
+    -moz-transform-origin: 50% 50%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
     background-image: url(duckhunt_various_sheet.png);
     background-position: 0px 0px;
     background-repeat: no-repeat;
