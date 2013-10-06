@@ -11,6 +11,11 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
+.noCursor {
+    cursor: none;
+}
+
 body {
     padding: 0px;
     background-color: #68b6fa;
@@ -76,6 +81,18 @@ h1,
     margin-right: 5px;
 }
 
+#cursor {
+    display: none;
+    position: absolute;
+    background-image: url(crosshairs.png);
+    background-size: contain;
+    height: 30px;
+    width: 30px;
+    float: left;
+    z-index: 999;
+    pointer-events:none;
+}
+
 button,
 select {
     width: 45%;
@@ -106,6 +123,7 @@ span[class^="duck-"] {
     position: absolute;
     top: 0px;
     left: 0px;
+
 }
 
 @-webkit-keyframes blackRight {

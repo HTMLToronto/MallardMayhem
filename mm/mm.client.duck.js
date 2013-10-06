@@ -1,4 +1,4 @@
-/*globals document, console, setTimeout, clearTimeout, Audio */
+/*globals document, setTimeout, clearTimeout, Audio, navigator */
 var MallardMayhem = MallardMayhem || {};
 
 (function () {
@@ -8,7 +8,6 @@ var MallardMayhem = MallardMayhem || {};
 
         var self = this;
 
-        this.server = MallardMayhem.server;
         this.currentTimeout = null;
 
         this.domElement = document.createElement('span');
@@ -38,11 +37,6 @@ var MallardMayhem = MallardMayhem || {};
                     coords = [coords.x, coords.y];
                 }
                 break;
-            }
-
-            if (coords.length !== 2) {
-                console.log('Invalid coords input to MallardMayhem.Duck.flyTo: ' + (typeof coords) + coords);
-                console.log('Coords requires an array of 2 integers or comma delimited string of similar.');
             }
 
             if (!self.currentLocation) {
@@ -133,7 +127,8 @@ var MallardMayhem = MallardMayhem || {};
         };
 
         this.gotShot = function () {
-            self.domElement.removeEventListener('click', self.gotShot);
+            self.domElement.removeEventListener('mousedown', self.gotShot);
+            self.domElement.removeEventListener('touchstart', self.gotShot);
             MallardMayhem.killDuck(self.id);
         };
 
@@ -144,16 +139,17 @@ var MallardMayhem = MallardMayhem || {};
         this.initialize = function () {
             self.domElement.id = self.id;
             self.domElement.setAttribute('class', 'duck-' + self.colour + '-right');
-            self.domElement.addEventListener('click', self.gotShot);
+            self.domElement.addEventListener('mousedown', self.gotShot);
+            self.domElement.addEventListener('touchstart', self.gotShot);
             MallardMayhem.stage.appendChild(self.domElement);
             var randomLocation = MallardMayhem.randomCoord(),
-            	format = (navigator.userAgent.indexOf('Firefox') > 1) ? 'ogg' : 'mp3';;
+                format = (navigator.userAgent.indexOf('Firefox') > 1) ? 'ogg' : 'mp3';
             self.flyTo(randomLocation);
             self.lifeSpan = setTimeout(self.flyAway, self.maxAge);
-			
+
             self.sounds = {
-                fall : new Audio('./interface/fall.' + format),
-                ground: new Audio('./interface/ground.' + format)
+                fall : new Audio('./audio/fall.' + format),
+                ground: new Audio('./audio/ground.' + format)
             };
             self.sounds.fall.volume = 0.1;
 
@@ -161,6 +157,8 @@ var MallardMayhem = MallardMayhem || {};
 
         this.flyAway = function () {
             clearTimeout(self.currentTimeout);
+            self.domElement.removeEventListener('mousedown', self.gotShot);
+            self.domElement.removeEventListener('touchstart', self.gotShot);
             self.domElement.className = 'duck-' + self.colour + '-top';
             self.currentLocation[1] = self.currentLocation[1] - (MallardMayhem.animationStep * 3);
             self.domElement.style.top = self.currentLocation[1] + 'px';
